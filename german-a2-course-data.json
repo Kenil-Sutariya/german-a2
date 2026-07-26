@@ -1,0 +1,554 @@
+{
+  "course": {
+    "title": "German A2 in 12 Weeks",
+    "subtitle": "A practical 2-3 month learning plan for 1-2 hours per day",
+    "durationWeeks": 12,
+    "studyDaysPerWeek": 6,
+    "targetHours": 108,
+    "minimumDailyMinutes": 60,
+    "recommendedDailyMinutes": 90,
+    "maximumDailyMinutes": 120,
+    "restDay": "Sunday",
+    "completionCriteria": [
+      "Complete all 12 modules",
+      "Complete the VHS A2 course",
+      "Complete most Nicos Weg A2 lessons",
+      "Write a 60-80 word message",
+      "Speak for three minutes about a familiar topic",
+      "Understand simple everyday conversations",
+      "Score at least 70 percent in two practice tests"
+    ]
+  },
+  "dailyPlans": {
+    "60": [
+      "15 min vocabulary",
+      "20 min VHS lesson",
+      "15 min grammar",
+      "10 min speaking or writing"
+    ],
+    "90": [
+      "20 min vocabulary",
+      "30 min VHS lesson",
+      "20 min Nicos Weg",
+      "20 min writing or speaking"
+    ],
+    "120": [
+      "20 min vocabulary",
+      "40 min VHS lesson",
+      "25 min grammar",
+      "20 min Nicos Weg",
+      "15 min writing",
+      "10 min speaking",
+      "10 min revision"
+    ]
+  },
+  "weeklyRoutine": [
+    {
+      "day": "Monday",
+      "focus": "Topic introduction and vocabulary"
+    },
+    {
+      "day": "Tuesday",
+      "focus": "Grammar"
+    },
+    {
+      "day": "Wednesday",
+      "focus": "VHS exercises"
+    },
+    {
+      "day": "Thursday",
+      "focus": "Nicos Weg and listening"
+    },
+    {
+      "day": "Friday",
+      "focus": "Writing and speaking"
+    },
+    {
+      "day": "Saturday",
+      "focus": "Test and revision"
+    },
+    {
+      "day": "Sunday",
+      "focus": "Rest"
+    }
+  ],
+  "materials": [
+    {
+      "id": "M1",
+      "name": "VHS-Lernportal A2",
+      "type": "Main course",
+      "url": "https://a2.vhs-lernportal.de/",
+      "usage": "Use for the main structured lessons, grammar, listening and exercises."
+    },
+    {
+      "id": "M2",
+      "name": "Nicos Weg A2",
+      "type": "Video and listening",
+      "url": "https://learngerman.dw.com/",
+      "usage": "Use for natural conversations, listening and pronunciation."
+    },
+    {
+      "id": "M3",
+      "name": "Goethe A2 practice materials",
+      "type": "Vocabulary and exam PDFs",
+      "url": "https://www.goethe.de/en/spr/prf/ueb/pa2.html",
+      "usage": "Use for the vocabulary list and final reading, writing, listening and speaking practice."
+    },
+    {
+      "id": "M4",
+      "name": "Schritte plus Neu A2",
+      "type": "Optional textbook",
+      "url": "https://www.hueber.de/reihe/schritte-plus-neu",
+      "usage": "Optional printed or digital textbook for additional guided practice."
+    }
+  ],
+  "modules": [
+    {
+      "id": "T0",
+      "title": "Course Setup",
+      "week": 0,
+      "estimatedHours": 1.5,
+      "topics": [
+        "Prepare learning accounts",
+        "Download materials",
+        "Create vocabulary notebook",
+        "Set weekly goal"
+      ],
+      "grammar": [],
+      "tasks": [
+        "Create a VHS-Lernportal account",
+        "Save the Nicos Weg A2 course",
+        "Download the Goethe A2 vocabulary PDF",
+        "Download one Goethe A2 practice test",
+        "Create a vocabulary notebook",
+        "Set a weekly learning goal",
+        "Create the progress tracker"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T1",
+      "title": "Weekend, Free Time and Weather",
+      "week": 1,
+      "estimatedHours": 9,
+      "topics": [
+        "Weekend activities",
+        "Hobbies",
+        "Weather",
+        "Appointments",
+        "Invitations"
+      ],
+      "grammar": [
+        "Personal pronouns in Akkusativ",
+        "mich, dich, ihn, sie, uns, euch",
+        "Pronoun man",
+        "Basic sentence order"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 1",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 30 topic words",
+        "Write about your weekend",
+        "Write one invitation",
+        "Speak for two minutes about your weekend",
+        "Complete weekly revision"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T2",
+      "title": "Travel and Transport",
+      "week": 2,
+      "estimatedHours": 9,
+      "topics": [
+        "Bus and train",
+        "Tickets",
+        "Directions",
+        "Travel plans",
+        "Hotels",
+        "Transport problems"
+      ],
+      "grammar": [
+        "mit, nach, zu, bei",
+        "Comparative",
+        "Superlative",
+        "Connector deshalb"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 2",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 30 topic words",
+        "Practise asking for directions",
+        "Write about your last journey",
+        "Practise buying a ticket",
+        "Complete weekly revision"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T3",
+      "title": "Apartment and Moving",
+      "week": 3,
+      "estimatedHours": 10,
+      "topics": [
+        "Rooms",
+        "Furniture",
+        "Apartment advertisements",
+        "Moving",
+        "Neighbours"
+      ],
+      "grammar": [
+        "Two-way prepositions",
+        "Akkusativ versus Dativ",
+        "liegen/legen",
+        "stehen/stellen",
+        "sitzen/setzen"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 3",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 35 topic words",
+        "Describe your apartment",
+        "Write an apartment enquiry",
+        "Practise location sentences",
+        "Complete weekly revision"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T4",
+      "title": "Authorities and Documents",
+      "week": 4,
+      "estimatedHours": 9,
+      "topics": [
+        "Registration office",
+        "Immigration office",
+        "Appointments",
+        "Forms",
+        "Documents",
+        "Formal phone calls"
+      ],
+      "grammar": [
+        "Subordinate clause with wenn",
+        "etwas, nichts, alles",
+        "Demonstrative pronouns",
+        "Formal questions"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 4",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 30 topic words",
+        "Complete a sample form",
+        "Write an appointment request",
+        "Practise a formal phone call",
+        "Complete Month 1 revision",
+        "Complete Gate 1 vocabulary test",
+        "Complete Gate 1 grammar test",
+        "Write one practical email",
+        "Record a three-minute speaking exercise"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T5",
+      "title": "Biography and Education",
+      "week": 5,
+      "estimatedHours": 9,
+      "topics": [
+        "Personal history",
+        "School",
+        "University",
+        "Vocational training",
+        "Qualifications",
+        "Important life events"
+      ],
+      "grammar": [
+        "Perfekt with haben",
+        "Perfekt with sein",
+        "Separable verbs in Perfekt",
+        "seit and vor"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 5",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 30 topic words",
+        "Create your personal timeline",
+        "Write your short biography",
+        "Speak about your education",
+        "Complete weekly revision"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T6",
+      "title": "Jobs and Applications",
+      "week": 6,
+      "estimatedHours": 10,
+      "topics": [
+        "Professions",
+        "Work experience",
+        "Job advertisements",
+        "CV",
+        "Applications",
+        "Career goals"
+      ],
+      "grammar": [
+        "Reflexive verbs",
+        "weil",
+        "denn",
+        "aber",
+        "Time expressions"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 6",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 35 topic words",
+        "Read three job advertisements",
+        "Write a short application message",
+        "Describe your work experience",
+        "Complete weekly revision"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T7",
+      "title": "Shopping, Clothing and Restaurants",
+      "week": 7,
+      "estimatedHours": 10,
+      "topics": [
+        "Clothes",
+        "Colours",
+        "Sizes",
+        "Prices",
+        "Food",
+        "Restaurant conversations"
+      ],
+      "grammar": [
+        "Adjective endings",
+        "Articles with adjectives",
+        "Ich hätte gern",
+        "Demonstrative pronouns"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 7",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 35 topic words",
+        "Describe five items of clothing",
+        "Write a restaurant dialogue",
+        "Practise ordering food",
+        "Complete weekly revision"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T8",
+      "title": "Workplace German",
+      "week": 8,
+      "estimatedHours": 10,
+      "topics": [
+        "Workplace tasks",
+        "Colleagues",
+        "Supervisors",
+        "Instructions",
+        "Rules",
+        "Formal and informal communication"
+      ],
+      "grammar": [
+        "Dativ verbs",
+        "Possessive articles in Dativ",
+        "müssen, dürfen, sollen",
+        "Polite requests with könnten"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 8",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 35 topic words",
+        "Describe your workday",
+        "Write five workplace rules",
+        "Practise asking a colleague for help",
+        "Complete Month 2 revision",
+        "Complete Gate 2 Perfekt test",
+        "Complete Gate 2 Dativ and Akkusativ test",
+        "Write one work-related email",
+        "Speak for three minutes about your work"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T9",
+      "title": "School, Childhood and Past Abilities",
+      "week": 9,
+      "estimatedHours": 9,
+      "topics": [
+        "School subjects",
+        "Childhood",
+        "Learning",
+        "Earlier experiences",
+        "Career wishes"
+      ],
+      "grammar": [
+        "Modal verbs in Präteritum",
+        "konnte",
+        "musste",
+        "wollte",
+        "durfte",
+        "Subordinate clause with dass"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 9",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 30 topic words",
+        "Write about your school days",
+        "Write ten sentences with modal verbs",
+        "Speak about your childhood",
+        "Complete weekly revision"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T10",
+      "title": "Health and Doctor",
+      "week": 10,
+      "estimatedHours": 10,
+      "topics": [
+        "Body parts",
+        "Symptoms",
+        "Doctor appointments",
+        "Medicine",
+        "Health insurance",
+        "Health advice"
+      ],
+      "grammar": [
+        "für and gegen",
+        "Verbs with Dativ and Akkusativ",
+        "Subordinate clause with damit",
+        "Imperative for advice"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 10",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 35 topic words",
+        "Write a doctor-patient dialogue",
+        "Practise describing symptoms",
+        "Write an illness message",
+        "Complete weekly revision"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T11",
+      "title": "Bank, Money and Daily Problems",
+      "week": 11,
+      "estimatedHours": 9,
+      "topics": [
+        "Bank account",
+        "Bank card",
+        "Cash withdrawal",
+        "Transfers",
+        "Payments",
+        "Banking problems"
+      ],
+      "grammar": [
+        "Indirect questions",
+        "Simple relative clauses",
+        "Polite questions",
+        "Passive voice introduction"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 11",
+        "Watch 2-3 related Nicos Weg lessons",
+        "Learn 30 topic words",
+        "Write a message to a bank",
+        "Practise explaining a card problem",
+        "Practise indirect questions",
+        "Complete weekly revision"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    },
+    {
+      "id": "T12",
+      "title": "Hobbies, Social Plans and Final Revision",
+      "week": 12,
+      "estimatedHours": 11,
+      "topics": [
+        "Sports",
+        "Hobbies",
+        "Clubs",
+        "Social activities",
+        "Celebrations",
+        "Invitations and cancellations"
+      ],
+      "grammar": [
+        "trotzdem",
+        "Revision of deshalb",
+        "Reflexive verbs",
+        "Complete A2 grammar revision"
+      ],
+      "tasks": [
+        "Complete VHS A2 Lesson 12",
+        "Finish remaining Nicos Weg A2 lessons",
+        "Learn final topic vocabulary",
+        "Write an invitation",
+        "Write a cancellation",
+        "Complete Goethe A2 practice test 1",
+        "Correct all mistakes",
+        "Complete a second practice test",
+        "Complete final speaking practice",
+        "Score at least 70 percent in two practice tests"
+      ],
+      "materials": [
+        "M1",
+        "M2",
+        "M3"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "German A2 in 12 Weeks",
+  "short_name": "Deutsch A2",
+  "description": "A calm, motivating German A2 course tracker.",
+  "start_url": "/#/",
+  "display": "standalone",
+  "background_color": "#f5f3ee",
+  "theme_color": "#e87835",
+  "orientation": "any",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
