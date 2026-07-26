@@ -579,20 +579,6 @@ h3 {
   background: var(--surface-3);
 }
 
-.progress-ring::before {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--orange);
-  content: "";
-  transform: translateY(-50%);
-}
-
-.progress-ring--empty::before {
-  display: none;
-}
-
 .progress-ring--large {
   width: clamp(134px, 16vw, 174px);
   height: clamp(134px, 16vw, 174px);
