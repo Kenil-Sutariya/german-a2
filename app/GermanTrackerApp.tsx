@@ -1741,7 +1741,10 @@ export function GermanTrackerApp() {
     <div className={`app-shell ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
       <aside className="sidebar" aria-label="Primary navigation">
         <div className="brand">
-          <div className="brand-mark">DE</div>
+          <div className="brand-mark" aria-label="Deutsch A2">
+            <span>DE</span>
+            <small>A2</small>
+          </div>
           <div className="brand-copy">
             <strong>Deutsch A2</strong>
             <span>12-week tracker</span>
