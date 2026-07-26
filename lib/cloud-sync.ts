@@ -47,7 +47,8 @@ async function request<T>(url: string, init: RequestInit): Promise<T> {
     const message = await response.json().catch(() => null);
     throw new Error(message?.msg || message?.message || "Cloud sync request failed.");
   }
-  return response.status === 204 ? (undefined as T) : response.json();
+  const body = await response.text();
+  return body ? (JSON.parse(body) as T) : (undefined as T);
 }
 
 export function isCloudSyncConfigured() {
