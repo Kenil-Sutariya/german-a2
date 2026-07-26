@@ -23,6 +23,18 @@ import {
   todayKey,
 } from "@/lib/course";
 import { focusResources } from "@/lib/focus-resources";
+import {
+  clearCloudSession,
+  isCloudSyncConfigured,
+  loadCloudProgress,
+  readCloudSession,
+  refreshCloudSession,
+  saveCloudProgress,
+  signInToCloud,
+  signOutOfCloud,
+  signUpForCloud,
+  type CloudSession,
+} from "@/lib/cloud-sync";
 import type {
   CourseModule,
   CourseProgress,
@@ -1154,6 +1166,105 @@ function Toggle({
   );
 }
 
+type CloudStatus = "not-configured" | "signed-out" | "syncing" | "synced" | "error";
+
+function CloudSyncSettings({
+  status,
+  session,
+  error,
+  onConnect,
+  onDisconnect,
+  onSyncNow,
+}: {
+  status: CloudStatus;
+  session?: CloudSession;
+  error?: string;
+  onConnect: (email: string, password: string, mode: "sign-in" | "sign-up") => void;
+  onDisconnect: () => void;
+  onSyncNow: () => void;
+}) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const connected = Boolean(session);
+  const configured = status !== "not-configured";
+
+  function submit(event: FormEvent<HTMLFormElement>, mode: "sign-in" | "sign-up") {
+    event.preventDefault();
+    onConnect(email, password, mode);
+  }
+
+  return (
+    <article className="card settings-section cloud-sync-card">
+      <div className="settings-section__heading">
+        <span aria-hidden="true">☁</span>
+        <div>
+          <h2>Cloud sync</h2>
+          <p>Keep Chakudiiii’s progress private and available on every device.</p>
+        </div>
+      </div>
+      {!configured ? (
+        <p className="cloud-sync-card__hint">
+          Cloud sync is ready in the code. Add the two Supabase values in Vercel to
+          activate it.
+        </p>
+      ) : connected ? (
+        <div className="cloud-sync-card__connected">
+          <div>
+            <strong>Connected as {session?.user.email ?? "your learner account"}</strong>
+            <p>{status === "syncing" ? "Saving securely…" : "Progress is saved privately to the cloud."}</p>
+          </div>
+          <div className="cloud-sync-card__actions">
+            <button className="button button--secondary" type="button" onClick={onSyncNow}>
+              Sync now
+            </button>
+            <button className="text-button" type="button" onClick={onDisconnect}>
+              Sign out
+            </button>
+          </div>
+        </div>
+      ) : (
+        <form className="cloud-sync-card__form" onSubmit={(event) => submit(event, "sign-in")}>
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="nency@example.com"
+              required
+            />
+          </label>
+          <label>
+            Password
+            <input
+              type="password"
+              minLength={6}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="At least 6 characters"
+              required
+            />
+          </label>
+          <div className="cloud-sync-card__actions">
+            <button className="button button--primary" type="submit" disabled={status === "syncing"}>
+              {status === "syncing" ? "Connecting…" : "Sign in to sync"}
+            </button>
+            <button
+              className="button button--secondary"
+              type="button"
+              disabled={status === "syncing"}
+              onClick={() => onConnect(email, password, "sign-up")}
+            >
+              Create account
+            </button>
+          </div>
+        </form>
+      )}
+      {error && <p className="cloud-sync-card__error" role="alert">{error}</p>}
+    </article>
+  );
+}
+
 function SettingsView({
   progress,
   commit,
@@ -1161,6 +1272,12 @@ function SettingsView({
   onExport,
   onImport,
   onReset,
+  cloudStatus,
+  cloudSession,
+  cloudError,
+  onCloudConnect,
+  onCloudDisconnect,
+  onCloudSyncNow,
 }: {
   progress: CourseProgress;
   commit: (
@@ -1171,6 +1288,12 @@ function SettingsView({
   onExport: () => void;
   onImport: (event: ChangeEvent<HTMLInputElement>) => void;
   onReset: () => void;
+  cloudStatus: CloudStatus;
+  cloudSession?: CloudSession;
+  cloudError?: string;
+  onCloudConnect: (email: string, password: string, mode: "sign-in" | "sign-up") => void;
+  onCloudDisconnect: () => void;
+  onCloudSyncNow: () => void;
 }) {
   const fileInput = useRef<HTMLInputElement>(null);
   return (
@@ -1287,6 +1410,14 @@ function SettingsView({
               </button>
             )}
           </article>
+          <CloudSyncSettings
+            status={cloudStatus}
+            session={cloudSession}
+            error={cloudError}
+            onConnect={onCloudConnect}
+            onDisconnect={onCloudDisconnect}
+            onSyncNow={onCloudSyncNow}
+          />
         </div>
 
         <aside className="settings-side">
@@ -1531,12 +1662,36 @@ export function GermanTrackerApp() {
   const [toast, setToast] = useState<string>();
   const [lastCompletedId, setLastCompletedId] = useState<string>();
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [cloudSession, setCloudSession] = useState<CloudSession>();
+  const [cloudStatus, setCloudStatus] = useState<CloudStatus>(() =>
+    isCloudSyncConfigured() ? "signed-out" : "not-configured",
+  );
+  const [cloudError, setCloudError] = useState<string>();
 
-  const persist = useCallback((value: CourseProgress) => {
+  const syncCloud = useCallback(
+    async (value: CourseProgress, session = cloudSession) => {
+      if (!session || !isCloudSyncConfigured()) return;
+      setCloudStatus("syncing");
+      setCloudError(undefined);
+      try {
+        await saveCloudProgress(session, value);
+        setCloudStatus("synced");
+      } catch (error) {
+        setCloudStatus("error");
+        setCloudError(error instanceof Error ? error.message : "Cloud sync could not save right now.");
+      }
+    },
+    [cloudSession],
+  );
+
+  const persist = useCallback((value: CourseProgress, forceCloudSave = false) => {
     const saved = { ...value, lastSavedAt: new Date().toISOString() };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    if (cloudSession && (saved.autoSave || forceCloudSave)) {
+      void syncCloud(saved);
+    }
     return saved;
-  }, []);
+  }, [cloudSession, syncCloud]);
 
   const commit = useCallback(
     (
@@ -1545,7 +1700,7 @@ export function GermanTrackerApp() {
     ) => {
       setProgress((previous) => {
         const next = updater(previous);
-        return forceSave || previous.autoSave || next.autoSave ? persist(next) : next;
+        return forceSave || previous.autoSave || next.autoSave ? persist(next, forceSave) : next;
       });
     },
     [persist],
@@ -1567,6 +1722,37 @@ export function GermanTrackerApp() {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").catch(() => undefined);
     }
+  }, []);
+
+  useEffect(() => {
+    if (!isCloudSyncConfigured()) return;
+    const session = readCloudSession();
+    if (!session) return;
+    let cancelled = false;
+    setCloudStatus("syncing");
+    void refreshCloudSession(session)
+      .then((refreshedSession) => {
+        if (cancelled) return null;
+        setCloudSession(refreshedSession);
+        return loadCloudProgress(refreshedSession);
+      })
+      .then((cloudProgress) => {
+        if (cancelled) return;
+        if (cloudProgress) {
+          const incoming = mergeProgress(cloudProgress.data);
+          setProgress(incoming);
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(incoming));
+        }
+        setCloudStatus("synced");
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setCloudStatus("error");
+        setCloudError(error instanceof Error ? error.message : "Cloud sync could not connect.");
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -1648,8 +1834,41 @@ export function GermanTrackerApp() {
   }
 
   function saveNow() {
-    setProgress((previous) => persist(previous));
-    setToast("Progress saved on this device");
+    setProgress((previous) => persist(previous, true));
+    setToast(cloudSession ? "Progress saved on this device and in the cloud" : "Progress saved on this device");
+  }
+
+  async function connectCloud(email: string, password: string, mode: "sign-in" | "sign-up") {
+    setCloudStatus("syncing");
+    setCloudError(undefined);
+    try {
+      const session =
+        mode === "sign-in"
+          ? await signInToCloud(email, password)
+          : await signUpForCloud(email, password);
+      setCloudSession(session);
+      const cloudProgress = await loadCloudProgress(session);
+      if (cloudProgress) {
+        const incoming = mergeProgress(cloudProgress.data);
+        setProgress(persist(incoming));
+      } else {
+        await syncCloud(progress, session);
+      }
+      setCloudStatus("synced");
+      setToast("Cloud sync is on — your progress can follow you everywhere.");
+    } catch (error) {
+      setCloudStatus("error");
+      setCloudError(error instanceof Error ? error.message : "Cloud sync could not connect.");
+    }
+  }
+
+  async function disconnectCloud() {
+    const session = cloudSession;
+    clearCloudSession();
+    setCloudSession(undefined);
+    setCloudStatus(isCloudSyncConfigured() ? "signed-out" : "not-configured");
+    if (session) await signOutOfCloud(session).catch(() => undefined);
+    setToast("Cloud sync disconnected. Your device copy is still safe.");
   }
 
   function exportProgress() {
@@ -1902,6 +2121,12 @@ export function GermanTrackerApp() {
               onExport={exportProgress}
               onImport={importProgress}
               onReset={() => setShowReset(true)}
+              cloudStatus={cloudStatus}
+              cloudSession={cloudSession}
+              cloudError={cloudError}
+              onCloudConnect={connectCloud}
+              onCloudDisconnect={disconnectCloud}
+              onCloudSyncNow={() => void syncCloud(progress)}
             />
           )}
         </main>

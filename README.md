@@ -53,3 +53,52 @@ npm test
 Progress is stored under `german-a2-progress-v1` in `localStorage`. Course data
 is never overwritten, so seed updates can be shipped without erasing existing
 task progress.
+
+## Universal cloud sync on Vercel
+
+The app includes an optional Supabase integration. It keeps a local copy for
+offline use, then securely syncs the signed-in learner’s progress to a private
+cloud record. This means Nency can sign in on a phone, iPad or laptop and see
+the same course progress.
+
+### 1. Create the database
+
+1. Create a free [Supabase project](https://supabase.com/dashboard).
+2. Open **SQL Editor** and run the complete contents of
+   [`supabase/schema.sql`](./supabase/schema.sql).
+3. In **Authentication → Providers**, leave Email enabled. For the simplest
+   first setup, disable email confirmation; otherwise Nency must confirm her
+   account email before the first sign-in.
+
+The SQL enables Row Level Security: a signed-in learner can read and write only
+their own progress record. Never use the Supabase `service_role` key in Vercel
+or in the browser.
+
+### 2. Add the Vercel environment variables
+
+1. In Supabase, open **Project Settings → API**.
+2. Copy the project URL and the anon/publishable key.
+3. In Vercel, open this project’s **Settings → Environment Variables** and add:
+
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+4. Apply them to Production, Preview and Development, then redeploy.
+
+Use [`.env.example`](./.env.example) as the local template. Do not commit a
+real `.env.local` file.
+
+### 3. Turn it on in the app
+
+After Vercel redeploys, open **Settings → Cloud sync** in the tracker. Create a
+learner account for Nency with her email and a password of at least six
+characters, then sign in. With auto-save enabled (the default), each change is
+saved both on the device and to the cloud. The **Sync now** button is available
+for an immediate manual sync.
+
+### Files added for cloud sync
+
+- `lib/cloud-sync.ts` — browser-safe Supabase Auth and database calls, with no
+  service-role secret.
+- `supabase/schema.sql` — database table and private Row Level Security rules.
+- `.env.example` — the two required Vercel environment variable names.

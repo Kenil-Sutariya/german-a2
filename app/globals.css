@@ -2379,6 +2379,64 @@ select {
   text-overflow: ellipsis;
 }
 
+.cloud-sync-card {
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--teal) 11%, transparent), transparent 38%),
+    var(--surface);
+}
+
+.cloud-sync-card__hint,
+.cloud-sync-card__connected p,
+.cloud-sync-card__error {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.cloud-sync-card__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.cloud-sync-card__form label {
+  display: grid;
+  gap: 0.38rem;
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 760;
+}
+
+.cloud-sync-card__form input {
+  width: 100%;
+}
+
+.cloud-sync-card__actions {
+  display: flex;
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.cloud-sync-card__connected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.9rem;
+}
+
+.cloud-sync-card__connected strong {
+  font-size: 0.82rem;
+}
+
+.cloud-sync-card__error {
+  color: #b4452a;
+}
+
 @media (min-width: 640px) {
   .stats-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -2736,6 +2794,15 @@ select {
 }
 
 @media (max-width: 639px) {
+  .cloud-sync-card__form {
+    grid-template-columns: 1fr;
+  }
+
+  .cloud-sync-card__connected {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .topbar {
     min-height: 54px;
     flex-wrap: wrap;
