@@ -575,6 +575,10 @@ h3 {
   background: conic-gradient(var(--orange) var(--progress), var(--surface-3) 0);
 }
 
+.progress-ring--empty {
+  background: var(--surface-3);
+}
+
 .progress-ring::before {
   position: absolute;
   width: 10px;
@@ -583,6 +587,10 @@ h3 {
   background: var(--orange);
   content: "";
   transform: translateY(-50%);
+}
+
+.progress-ring--empty::before {
+  display: none;
 }
 
 .progress-ring--large {
@@ -783,33 +791,31 @@ h3 {
 
 .personal-note__heart {
   display: grid;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   place-items: center;
-  border: 1px solid color-mix(in srgb, var(--danger) 22%, var(--border));
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--danger-soft) 72%, var(--surface));
-  color: var(--orange);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--danger);
   cursor: pointer;
   font-family: Georgia, serif;
-  font-size: 1.75rem;
+  font-size: 2.4rem;
   line-height: 1;
   transition:
     color 160ms ease,
     transform 160ms ease,
-    background-color 160ms ease,
     box-shadow 160ms ease;
 }
 
 .personal-note__heart span {
-  transform: translateY(1px) rotate(-8deg);
+  filter: drop-shadow(0 9px 14px color-mix(in srgb, var(--danger) 24%, transparent));
+  transform: translateY(1px) rotate(-7deg);
 }
 
 .personal-note__heart:hover,
 .personal-note__heart.is-celebrating {
-  background: var(--danger);
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--danger) 28%, transparent);
-  color: white;
+  color: color-mix(in srgb, var(--danger) 82%, var(--orange));
   transform: translateY(-2px) scale(1.05);
 }
 

@@ -144,15 +144,19 @@ function ProgressRing({
   value: number;
   size?: "large" | "small";
 }) {
+  const safeValue = Math.min(100, Math.max(0, value));
+
   return (
     <div
-      className={`progress-ring progress-ring--${size}`}
-      style={{ "--progress": `${Math.min(100, value) * 3.6}deg` } as React.CSSProperties}
+      className={`progress-ring progress-ring--${size} ${
+        safeValue === 0 ? "progress-ring--empty" : ""
+      }`}
+      style={{ "--progress": `${safeValue * 3.6}deg` } as React.CSSProperties}
       role="img"
-      aria-label={`${value}% complete`}
+      aria-label={`${safeValue}% complete`}
     >
       <div className="progress-ring__inner">
-        <strong>{value}%</strong>
+        <strong>{safeValue}%</strong>
         <span>complete</span>
       </div>
     </div>
