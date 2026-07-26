@@ -42,6 +42,15 @@ const MOTIVATIONS = [
   "Ein Schritt nach dem anderen—you’ve got this, Nency.",
 ];
 
+const HEART_PARTICLES = Array.from({ length: 36 }, (_, index) => ({
+  left: 4 + ((index * 29) % 93),
+  top: 4 + ((index * 47) % 88),
+  size: 15 + ((index * 7) % 24),
+  delay: (index * 43) % 430,
+  drift: -36 + ((index * 19) % 73),
+  rotation: -32 + ((index * 23) % 65),
+}));
+
 interface LearningNotification {
   id: string;
   title: string;
@@ -201,6 +210,7 @@ function Dashboard({
   onContinue: () => void;
   onLogTime: () => void;
 }) {
+  const [heartBurstId, setHeartBurstId] = useState(0);
   const snapshot = getProgressSnapshot(progress);
   const currentProgress = getModuleProgress(snapshot.currentModule, progress);
   const todayTasks = snapshot.currentModule.tasks
@@ -214,6 +224,12 @@ function Dashboard({
     milestones.at(-1)!;
   const motivation =
     MOTIVATIONS[new Date().getDate() % MOTIVATIONS.length];
+
+  useEffect(() => {
+    if (!heartBurstId) return;
+    const timer = window.setTimeout(() => setHeartBurstId(0), 1900);
+    return () => window.clearTimeout(timer);
+  }, [heartBurstId]);
 
   return (
     <div className="view">
@@ -314,10 +330,43 @@ function Dashboard({
             you learn is proof that you showed up for yourself today.
           </p>
         </div>
-        <span className="personal-note__heart" aria-hidden="true">
-          ♡
-        </span>
+        <button
+          className={`personal-note__heart ${heartBurstId ? "is-celebrating" : ""}`}
+          type="button"
+          aria-label="Send Nency a shower of hearts"
+          onClick={() => setHeartBurstId((value) => value + 1)}
+        >
+          <span aria-hidden="true">♥</span>
+        </button>
       </section>
+
+      {heartBurstId > 0 && (
+        <div
+          className="heart-burst"
+          key={heartBurstId}
+          aria-hidden="true"
+          data-testid="heart-burst"
+        >
+          {HEART_PARTICLES.map((particle, index) => (
+            <span
+              className="heart-burst__particle"
+              key={index}
+              style={
+                {
+                  "--heart-left": `${particle.left}%`,
+                  "--heart-top": `${particle.top}%`,
+                  "--heart-size": `${particle.size}px`,
+                  "--heart-delay": `${particle.delay}ms`,
+                  "--heart-drift": `${particle.drift}px`,
+                  "--heart-rotation": `${particle.rotation}deg`,
+                } as React.CSSProperties
+              }
+            >
+              ♥
+            </span>
+          ))}
+        </div>
+      )}
 
       <section className="dashboard-lower">
         <article className="card today-card">

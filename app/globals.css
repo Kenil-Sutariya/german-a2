@@ -435,9 +435,14 @@ h3 {
 
 .card-heading {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.card-heading > * {
+  min-width: 0;
 }
 
 .button {
@@ -777,11 +782,82 @@ h3 {
 }
 
 .personal-note__heart {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--danger) 22%, var(--border));
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--danger-soft) 72%, var(--surface));
   color: var(--orange);
+  cursor: pointer;
   font-family: Georgia, serif;
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   line-height: 1;
-  transform: rotate(-8deg);
+  transition:
+    color 160ms ease,
+    transform 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.personal-note__heart span {
+  transform: translateY(1px) rotate(-8deg);
+}
+
+.personal-note__heart:hover,
+.personal-note__heart.is-celebrating {
+  background: var(--danger);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--danger) 28%, transparent);
+  color: white;
+  transform: translateY(-2px) scale(1.05);
+}
+
+.personal-note__heart:active {
+  transform: scale(0.94);
+}
+
+.heart-burst {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heart-burst__particle {
+  position: absolute;
+  top: var(--heart-top);
+  left: var(--heart-left);
+  color: #e5343f;
+  font-family: Georgia, serif;
+  font-size: var(--heart-size);
+  line-height: 1;
+  opacity: 0;
+  filter: drop-shadow(0 4px 5px rgba(146, 12, 26, 0.2));
+  transform: translate(-50%, 22px) rotate(var(--heart-rotation)) scale(0.25);
+  animation: heart-shower 1.35s cubic-bezier(0.18, 0.76, 0.32, 1) var(--heart-delay)
+    both;
+}
+
+@keyframes heart-shower {
+  12% {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(var(--heart-rotation)) scale(1.08);
+  }
+
+  62% {
+    opacity: 0.96;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--heart-drift)),
+        -120px
+      )
+      rotate(calc(var(--heart-rotation) + 26deg)) scale(0.72);
+  }
 }
 
 .dashboard-lower {
@@ -803,8 +879,9 @@ h3 {
 }
 
 .suggested-task {
-  display: flex;
+  display: grid;
   min-height: 64px;
+  grid-template-columns: 40px minmax(0, 1fr);
   align-items: center;
   gap: 0.85rem;
   padding: 0.7rem 0.8rem;
@@ -814,27 +891,30 @@ h3 {
 
 .suggested-task__number {
   display: grid;
-  width: 34px;
-  height: 34px;
-  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
   place-items: center;
   border-radius: 10px;
   background: var(--orange-soft);
   color: var(--orange-dark);
+  font-size: 1rem;
   font-weight: 850;
+  line-height: 1;
+  text-align: center;
 }
 
 .suggested-task div {
   min-width: 0;
 }
 
-.suggested-task strong,
-.suggested-task span {
+.suggested-task div strong,
+.suggested-task div span {
   display: block;
 }
 
 .suggested-task strong {
   font-size: 0.88rem;
+  overflow-wrap: anywhere;
 }
 
 .suggested-task div span {
@@ -2562,7 +2642,10 @@ select {
 
 @media (max-width: 639px) {
   .topbar {
+    min-height: 54px;
+    flex-wrap: wrap;
     gap: 0.55rem;
+    padding-inline: 0.75rem;
   }
 
   .notification-panel {
@@ -2587,11 +2670,26 @@ select {
   }
 
   .personal-note {
+    align-items: start;
     grid-template-columns: auto minmax(0, 1fr);
+    padding-right: 4.5rem;
   }
 
   .personal-note__heart {
-    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    font-size: 1.45rem;
+  }
+
+  .personal-note__mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
   }
 
   .module-summary {
@@ -2611,6 +2709,16 @@ select {
   .setting-field {
     grid-template-columns: 1fr;
     gap: 0.45rem;
+  }
+
+  .activity-row {
+    grid-template-columns: 58px minmax(0, 1fr) 34px;
+    gap: 0.55rem;
+    padding-inline: 0.65rem;
+  }
+
+  .activity-check {
+    width: 30px;
   }
 
   .hours-comparison__visual {
@@ -2634,5 +2742,9 @@ select {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .heart-burst {
+    display: none;
   }
 }
