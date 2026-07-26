@@ -18,6 +18,10 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     applicationName: "Deutsch A2 Tracker",
     manifest: "/manifest.webmanifest",
+    icons: {
+      icon: "/favicon.svg",
+      shortcut: "/favicon.svg",
+    },
     appleWebApp: {
       capable: true,
       statusBarStyle: "default",
